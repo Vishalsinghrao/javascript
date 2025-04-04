@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="background-color: #212121; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+    <!-- 0	UNSENT	Client has been created. open() not called yet.
+1	OPENED	open() has been called.
+2	HEADERS_RECEIVED	send() has been called, and headers and status are available.
+3	LOADING	Downloading; responseText holds partial data.
+4	DONE	The operation is complete. -->
+
+
+    <div id="card" style="height:400px; width : 300px;display:flex; margin: 10px; flex-direction: column; border: 1px solid white; border-radius: 10px; justify-content: center; align-items: center">
+
+    </div>
+
+    <div style="display : flex; justify-content: center; align-items: center; height: 10vh; width: 100%;">
+        <button id="btn">Click me</button>
+    </div>
+
+</body>
+<script>
+
+    const requestUrl = 'https://api.github.com/users/hiteshchoudhary'
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', requestUrl)
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const data = JSON.parse(this.responseText)
+            console.log(data);
+            const button = document.getElementById('btn');
+            button.addEventListener('click', function () {
+                const card = document.getElementById('card')
+                card.innerHTML = `<img src ="${data.avatar_url}" height="150px" width="150px" style= "border-radius: 50%;">
+                <h1  style="color : white"> Followers : ${data.followers} </h1>`;
+                
+            }
+            )
+        }
+    }
+    xhr.send();
+</script>
+
+</html>
